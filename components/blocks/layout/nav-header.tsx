@@ -1,7 +1,7 @@
+import type { ReactNode } from "react"
 import Link from "next/link"
 import { Menu } from "lucide-react"
 
-import { CartNavBadge } from "@/components/commerce/cart-nav-badge"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button, ButtonLink } from "@/components/ui/button"
 import { defaultBrand, defaultNavLinks } from "@/lib/blocks/defaults"
@@ -14,7 +14,12 @@ export type NavHeaderProps = {
   links?: NavLink[]
   ctaLabel?: string
   ctaHref?: string
-  cartCount?: number
+  /**
+   * Optional commerce slot (e.g. a cart badge). Left empty for marketing-only
+   * sites so the nav never imports commerce code. The shop layout passes
+   * `<CartNavBadge />` here.
+   */
+  cartSlot?: ReactNode
   className?: string
 }
 
@@ -23,7 +28,7 @@ export function NavHeader({
   links = defaultNavLinks,
   ctaLabel = "Register",
   ctaHref = "/register",
-  cartCount = 0,
+  cartSlot,
   className,
 }: NavHeaderProps) {
   return (
@@ -53,7 +58,7 @@ export function NavHeader({
 
         <div className="flex items-center gap-1 sm:gap-2">
           <ThemeToggle />
-          <CartNavBadge count={cartCount} />
+          {cartSlot}
           <Button
             variant="ghost"
             size="icon"

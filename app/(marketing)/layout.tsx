@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 
 import { NavHeader } from "@/components/blocks/layout/nav-header"
 import { SiteFooterPro } from "@/components/blocks/layout/site-footer-pro"
-import { cartItemCount, readCartCookie } from "@/lib/commerce/cart"
 
 export const metadata: Metadata = {
   title: {
@@ -13,17 +12,14 @@ export const metadata: Metadata = {
     "A modern SaaS marketing template with reusable blocks for Exori-generated websites.",
 }
 
-export default async function MarketingLayout({
+export default function MarketingLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const lines = await readCartCookie()
-  const count = cartItemCount(lines)
-
   return (
     <>
-      <NavHeader cartCount={count} />
+      <NavHeader />
       <main className="flex-1">{children}</main>
       <SiteFooterPro />
     </>

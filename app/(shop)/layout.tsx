@@ -1,5 +1,6 @@
 import { NavHeader } from "@/components/blocks/layout/nav-header";
 import { SiteFooterPro } from "@/components/blocks/layout/site-footer-pro";
+import { CartNavBadge } from "@/components/commerce/cart-nav-badge";
 import { cartItemCount, readCartCookie } from "@/lib/commerce/cart";
 
 export default async function ShopLayout({
@@ -12,7 +13,7 @@ export default async function ShopLayout({
 
   return (
     <>
-      <NavHeader cartCount={count} />
+      <NavHeader cartSlot={<CartNavBadge count={count} />} />
       <main className="flex-1">{children}</main>
       <SiteFooterPro />
     </>
