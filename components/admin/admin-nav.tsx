@@ -1,11 +1,15 @@
-import Link from "next/link";
 import { signOut } from "@/auth";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonLink } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 const adminLinks = [
   { href: "/admin", label: "Overview" },
-  { href: "/admin/users", label: "Manage users" },
+  { href: "/admin/users", label: "Users" },
+  { href: "/admin/products", label: "Products" },
+  { href: "/admin/categories", label: "Categories" },
+  { href: "/admin/orders", label: "Orders" },
+  { href: "/admin/shipping", label: "Shipping" },
+  { href: "/admin/taxes", label: "Taxes" },
 ];
 
 export function AdminNav() {
@@ -20,14 +24,14 @@ export function AdminNav() {
         </div>
         <nav className="flex flex-row gap-2 lg:flex-col">
           {adminLinks.map((link) => (
-            <Button
+            <ButtonLink
               key={link.href}
               variant="ghost"
               className="justify-start"
-              render={<Link href={link.href} />}
+              href={link.href}
             >
               {link.label}
-            </Button>
+            </ButtonLink>
           ))}
         </nav>
         <Separator className="hidden lg:block" />

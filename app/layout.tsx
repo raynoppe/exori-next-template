@@ -16,8 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Exori Next.js Template",
-  description: "Reusable Next.js starter with auth, admin, and content pages",
+  title: {
+    template: "%s | Nimbus",
+    default: "Nimbus — Modern SaaS Template",
+  },
+  description:
+    "A modern SaaS marketing template with reusable blocks for Exori-generated websites.",
 };
 
 export default function RootLayout({

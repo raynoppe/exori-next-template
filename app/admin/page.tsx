@@ -1,5 +1,6 @@
 import { AdminNav } from "@/components/admin/admin-nav";
 import { auth } from "@/auth";
+import { getPaidRevenueCents } from "@/lib/commerce/orders";
 import { prisma } from "@/lib/prisma";
 import {
   Card,
@@ -11,10 +12,14 @@ import {
 
 export default async function AdminPage() {
   const session = await auth();
-  const [userCount, messageCount, adminCount] = await Promise.all([
+  const [userCount, messageCount, adminCount, productCount, orderCount, revenueCents] =
+    await Promise.all([
     prisma.user.count(),
     prisma.contactMessage.count(),
     prisma.user.count({ where: { role: "ADMIN" } }),
+    prisma.product.count(),
+    prisma.order.count(),
+    getPaidRevenueCents(),
   ]);
 
   return (
@@ -27,7 +32,7 @@ export default async function AdminPage() {
             Signed in as {session?.user.email}
           </p>
         </div>
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
           <Card>
             <CardHeader>
               <CardTitle>Users</CardTitle>
@@ -49,6 +54,29 @@ export default async function AdminPage() {
             </CardHeader>
             <CardContent className="text-3xl font-semibold">
               {messageCount}
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Products</CardTitle>
+              <CardDescription>Catalog items</CardDescription>
+            </CardHeader>
+            <CardContent className="text-3xl font-semibold">{productCount}</CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Orders</CardTitle>
+              <CardDescription>All orders</CardDescription>
+            </CardHeader>
+            <CardContent className="text-3xl font-semibold">{orderCount}</CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Revenue</CardTitle>
+              <CardDescription>Paid + fulfilled</CardDescription>
+            </CardHeader>
+            <CardContent className="text-3xl font-semibold">
+              ${(revenueCents / 100).toFixed(2)}
             </CardContent>
           </Card>
         </div>

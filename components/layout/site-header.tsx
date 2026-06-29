@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 
 const publicLinks = [
   { href: "/", label: "Home" },
@@ -37,20 +37,20 @@ export async function SiteHeader() {
           {user ? (
             <>
               {user.role === "ADMIN" ? (
-                <Button variant="ghost" render={<Link href="/admin" />}>
+                <ButtonLink variant="ghost" href="/admin">
                   Admin
-                </Button>
+                </ButtonLink>
               ) : null}
-              <Button variant="outline" render={<Link href="/dashboard" />}>
+              <ButtonLink variant="outline" href="/dashboard">
                 Dashboard
-              </Button>
+              </ButtonLink>
             </>
           ) : (
             <>
-              <Button variant="ghost" render={<Link href="/login" />}>
+              <ButtonLink variant="ghost" href="/login">
                 Log in
-              </Button>
-              <Button render={<Link href="/register" />}>Register</Button>
+              </ButtonLink>
+              <ButtonLink href="/register">Register</ButtonLink>
             </>
           )}
         </div>

@@ -14,7 +14,8 @@ export const authConfig = {
       const isLoggedIn = !!auth?.user;
       const isAuthRoute =
         pathname.startsWith("/login") || pathname.startsWith("/register");
-      const isProtectedRoute = pathname.startsWith("/dashboard");
+      const isProtectedRoute =
+        pathname.startsWith("/dashboard") || pathname.startsWith("/orders");
       const isAdminRoute = pathname.startsWith("/admin");
 
       if (isLoggedIn && isAuthRoute) {

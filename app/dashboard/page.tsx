@@ -1,10 +1,9 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { auth, signOut } from "@/auth";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonLink } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -60,12 +59,15 @@ export default async function DashboardPage() {
                 <CardDescription>Explore the template routes.</CardDescription>
               </CardHeader>
               <CardContent className="flex flex-wrap gap-2">
-                <Button variant="outline" render={<Link href="/content" />}>
+                <ButtonLink variant="outline" href="/content">
                   Content
-                </Button>
-                <Button variant="outline" render={<Link href="/contact" />}>
-                  Contact
-                </Button>
+                </ButtonLink>
+                <ButtonLink variant="outline" href="/shop">
+                  Shop
+                </ButtonLink>
+                <ButtonLink variant="outline" href="/orders">
+                  Orders
+                </ButtonLink>
                 <form
                   action={async () => {
                     "use server";

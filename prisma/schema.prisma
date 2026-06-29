@@ -24,6 +24,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+  orders        Order[]
 }
 
 model Account {
@@ -67,4 +68,104 @@ model ContactMessage {
   email     String
   message   String
   createdAt DateTime @default(now())
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FULFILLED
+  CANCELLED
+  REFUNDED
+}
+
+model ProductCategory {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+}
+
+model Product {
+  id               String           @id @default(cuid())
+  slug             String           @unique
+  name             String
+  description      String
+  longDescription  String?
+  priceCents       Int
+  currency         String           @default("usd")
+  images           String[]
+  categoryId       String?
+  category         ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  stock            Int              @default(0)
+  status           ProductStatus    @default(DRAFT)
+  featured         Boolean          @default(false)
+  stripeProductId  String?
+  stripePriceId    String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  orderItems       OrderItem[]
+}
+
+model ShippingMethod {
+  id                 String   @id @default(cuid())
+  name               String
+  description        String?
+  priceCents         Int
+  freeThresholdCents Int?
+  active             Boolean  @default(true)
+  sortOrder          Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model TaxRate {
+  id        String   @id @default(cuid())
+  name      String
+  percent   Float
+  region    String?
+  active    Boolean  @default(true)
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id                    String      @id @default(cuid())
+  orderNumber           String      @unique
+  userId                String?
+  user                  User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  email                 String
+  status                OrderStatus @default(PENDING)
+  subtotalCents         Int
+  shippingCents         Int
+  taxCents              Int
+  totalCents            Int
+  currency              String      @default("usd")
+  shippingMethodName    String
+  shippingAddress       Json
+  stripeSessionId       String?     @unique
+  stripePaymentIntentId String?
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  items                 OrderItem[]
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId  String?
+  product    Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  name       String
+  priceCents Int
+  quantity   Int
 }
