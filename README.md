@@ -26,7 +26,7 @@ For local Stripe webhooks: `stripe listen --forward-to localhost:3000/api/webhoo
 
 ## Nimbus block library
 
-Reusable blocks under `components/blocks/` — marketing, commerce, and content. See `/blocks` for a live gallery.
+Reusable blocks under `src/components/blocks/` — marketing, commerce, and content. See `/blocks` for a live gallery.
 
 ### Marketing blocks
 
@@ -36,18 +36,18 @@ Hero, logo cloud, services, testimonials, features, stats, team, pricing, blog h
 
 | Block | Path |
 |-------|------|
-| Product Grid | `components/blocks/commerce/product-grid.tsx` |
-| Product Detail | `components/blocks/commerce/product-detail.tsx` |
-| Cart Summary | `components/blocks/commerce/cart-summary.tsx` |
-| Checkout Summary | `components/blocks/commerce/checkout-summary.tsx` |
+| Product Grid | `src/components/blocks/commerce/product-grid.tsx` |
+| Product Detail | `src/components/blocks/commerce/product-detail.tsx` |
+| Cart Summary | `src/components/blocks/commerce/cart-summary.tsx` |
+| Checkout Summary | `src/components/blocks/commerce/checkout-summary.tsx` |
 
 ### Content blocks
 
 | Block | Path |
 |-------|------|
-| FAQ Accordion | `components/blocks/content/faq-accordion.tsx` |
-| Legal Content | `components/blocks/content/legal-content.tsx` |
-| Blog Post | `components/blocks/content/blog-post.tsx` |
+| FAQ Accordion | `src/components/blocks/content/faq-accordion.tsx` |
+| Legal Content | `src/components/blocks/content/legal-content.tsx` |
+| Blog Post | `src/components/blocks/content/blog-post.tsx` |
 
 ## Storefront routes
 

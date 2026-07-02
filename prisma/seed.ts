@@ -1,7 +1,7 @@
 import "dotenv/config";
 
-import { createUser, getUserByEmail } from "../lib/auth";
-import { prisma } from "../lib/prisma";
+import { createUser, getUserByEmail } from "../src/lib/auth";
+import { prisma } from "../src/lib/prisma";
 
 async function seedAdmin() {
   const email = process.env.SEED_ADMIN_EMAIL ?? "admin@exori.local";
