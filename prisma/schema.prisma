@@ -25,6 +25,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   orders        Order[]
+  entries       CollectionEntry[]
 }
 
 model Account {
@@ -168,4 +169,31 @@ model OrderItem {
   name       String
   priceCents Int
   quantity   Int
+}
+
+enum EntryStatus {
+  DRAFT
+  PUBLISHED
+}
+
+// One generic model backs every "collection" (directory of entities — members,
+// designers, printer owners, listings). Which collections exist and what
+// fields they carry is config, not schema: src/lib/content/collections.ts.
+// Never add per-collection models for directory data — extend `fields` instead.
+model CollectionEntry {
+  id         String      @id @default(cuid())
+  collection String
+  slug       String
+  name       String
+  summary    String?
+  image      String?
+  fields     Json?
+  status     EntryStatus @default(PUBLISHED)
+  ownerId    String?
+  owner      User?       @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@unique([collection, slug])
+  @@index([collection, status])
 }

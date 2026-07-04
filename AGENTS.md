@@ -60,3 +60,23 @@ training data, these rules win.
 - `src/app/sitemap.ts`, `src/app/robots.ts`, and `public/llms.txt` already
   exist — extend them, don't duplicate. Absolute URLs derive from
   `NEXT_PUBLIC_SITE_URL`.
+
+## Collections (directories & profiles)
+
+- A **collection** is a directory of entities (members, designers, printer
+  owners, listings) with a list page at `/<collection>` and profile pages at
+  `/<collection>/[slug]`. All collections share the single generic
+  `CollectionEntry` model — **never add per-entity models for directory
+  data**; add fields to the collection's config instead.
+- Which collections exist is config, not code: `src/lib/content/collections.ts`
+  (Exori's scripted build overwrites the `collections` array from the project
+  plan — never rename its exports). Field types: text, textarea, url, email,
+  phone, tags.
+- Route wrappers are one-liners rendering the generic components
+  (`CollectionListPage` / `CollectionDetailPage` from
+  `src/components/directory/`) and MUST export `dynamic = "force-dynamic"` —
+  directory content is database-backed and must not be prerendered at build
+  time. See `src/app/(marketing)/members/` for the canonical shape.
+- Directory UI blocks: `DirectoryGrid`, `ProfileHeader` (blocks barrel).
+- `prisma/seed.ts` seeds sample entries for every configured collection
+  (idempotent) so directories render with content on first preview.

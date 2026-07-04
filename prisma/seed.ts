@@ -1,6 +1,7 @@
 import "dotenv/config";
 
 import { createUser, getUserByEmail } from "../src/lib/auth";
+import { collections } from "../src/lib/content/collections";
 import { prisma } from "../src/lib/prisma";
 
 async function seedAdmin() {
@@ -158,9 +159,49 @@ async function seedCommerce() {
   console.log("Seeded commerce catalog, shipping, and tax");
 }
 
+/**
+ * A few sample entries per configured collection so directories render with
+ * content on first preview instead of an empty state. Idempotent: skips any
+ * collection that already has entries. Field values are derived from the
+ * collection's own field config — no per-collection seed code.
+ */
+async function seedCollections() {
+  const sampleNames = ["Alex Rivera", "Jordan Lee", "Sam Patel"];
+  for (const collection of collections) {
+    const count = await prisma.collectionEntry.count({
+      where: { collection: collection.id },
+    });
+    if (count > 0) {
+      console.log(`Collection "${collection.id}" already seeded`);
+      continue;
+    }
+    for (const [i, name] of sampleNames.entries()) {
+      const fields: Record<string, string | string[]> = {};
+      for (const field of collection.fields) {
+        if (field.type === "tags") fields[field.name] = ["Sample", collection.singular];
+        else if (field.type === "url") fields[field.name] = "https://example.com";
+        else if (field.type === "email") fields[field.name] = "hello@example.com";
+        else if (field.name === "location") fields[field.name] = "Remote";
+        else fields[field.name] = `${collection.singular} ${i + 1}`;
+      }
+      await prisma.collectionEntry.create({
+        data: {
+          collection: collection.id,
+          slug: name.toLowerCase().replace(/\s+/g, "-"),
+          name,
+          summary: `Sample ${collection.singular.toLowerCase()} profile — replace with real ${collection.label.toLowerCase()} as they join.`,
+          fields,
+        },
+      });
+    }
+    console.log(`Seeded ${sampleNames.length} sample ${collection.label.toLowerCase()}`);
+  }
+}
+
 async function main() {
   await seedAdmin();
   await seedCommerce();
+  await seedCollections();
 }
 
 main()

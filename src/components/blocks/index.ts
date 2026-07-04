@@ -19,3 +19,5 @@ export { CheckoutSummary, type CheckoutSummaryProps } from "./commerce/checkout-
 export { FaqAccordion, type FaqAccordionProps } from "./content/faq-accordion"
 export { LegalContent, type LegalContentProps } from "./content/legal-content"
 export { BlogPost, type BlogPostProps } from "./content/blog-post"
+export { DirectoryGrid, type DirectoryGridProps, type DirectoryCard } from "./directory/directory-grid"
+export { ProfileHeader, type ProfileHeaderProps, type ProfileDetail } from "./directory/profile-header"
