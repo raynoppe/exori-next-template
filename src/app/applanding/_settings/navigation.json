@@ -1,0 +1,23 @@
+{
+  "variant": "nav-header",
+  "brandName": "Nimbus App",
+  "showAuthButtons": false,
+  "defaultTheme": "dark",
+  "ctaLabel": "Download",
+  "ctaHref": "/applanding/pricing",
+  "links": [
+    { "href": "/applanding", "label": "Home" },
+    {
+      "label": "Features",
+      "href": "/applanding/features",
+      "children": [
+        { "href": "/applanding/features/feature1", "label": "For teams" },
+        { "href": "/applanding/features/feature2", "label": "For creators" }
+      ]
+    },
+    { "href": "/applanding/pricing", "label": "Pricing" },
+    { "href": "/applanding/blog", "label": "Blog" },
+    { "href": "/applanding/support", "label": "Support" },
+    { "href": "/applanding/portal/tickets", "label": "Portal" }
+  ]
+}

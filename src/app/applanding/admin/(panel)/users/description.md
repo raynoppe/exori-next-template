@@ -1,0 +1,1 @@
+This is where the admin can manage users. They got access to the admin area, in other words, to pick up tickets, reply to tickets, check messages. 

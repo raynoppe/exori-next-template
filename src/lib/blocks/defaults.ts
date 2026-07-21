@@ -5,7 +5,14 @@ export const defaultBrand = {
 
 export const defaultNavLinks = [
   { href: "/", label: "Home" },
-  { href: "/shop", label: "Shop" },
+  {
+    label: "Shop",
+    href: "/shop/shop",
+    children: [
+      { href: "/shop/shop?category=mobiles", label: "Mobiles" },
+      { href: "/shop/shop?category=tablets", label: "Tablets" },
+    ],
+  },
   { href: "/about", label: "About" },
   { href: "/pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },

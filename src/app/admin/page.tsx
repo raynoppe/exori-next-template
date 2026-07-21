@@ -1,7 +1,6 @@
-import { AdminNav } from "@/components/admin/admin-nav";
+import { CatalogAdminNav } from "@/components/admin/catalog-admin-nav";
+import { CatalogManagement } from "@/components/admin/catalog-management";
 import { auth } from "@/auth";
-import { getPaidRevenueCents } from "@/lib/commerce/orders";
-import { prisma } from "@/lib/prisma";
 import {
   Card,
   CardContent,
@@ -9,77 +8,60 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getAllCatalogItemsAdmin } from "@/lib/catalog/queries";
+import { getUnmappedRegistrySlugs } from "@/lib/catalog/sync";
 
-export default async function AdminPage() {
+export default async function CatalogAdminPage() {
   const session = await auth();
-  const [userCount, messageCount, adminCount, productCount, orderCount, revenueCents] =
-    await Promise.all([
-    prisma.user.count(),
-    prisma.contactMessage.count(),
-    prisma.user.count({ where: { role: "ADMIN" } }),
-    prisma.product.count(),
-    prisma.order.count(),
-    getPaidRevenueCents(),
-  ]);
+  const items = await getAllCatalogItemsAdmin();
+  const unmapped = getUnmappedRegistrySlugs(items).map(({ type, slug, entry }) => ({
+    type,
+    slug,
+    label: entry.label,
+  }));
+
+  const blockCount = items.filter((item) => item.type === "BLOCK").length;
+  const layoutCount = items.filter((item) => item.type === "PAGE_LAYOUT").length;
+  const navCount = items.filter((item) => item.type === "NAVIGATION").length;
 
   return (
     <div className="flex flex-1 flex-col lg:flex-row">
-      <AdminNav />
+      <CatalogAdminNav />
       <div className="flex-1 space-y-6 p-6">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Overview</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Catalog overview
+          </h1>
           <p className="text-muted-foreground">
             Signed in as {session?.user.email}
           </p>
         </div>
-        <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
+
+        <div className="grid gap-4 md:grid-cols-3">
           <Card>
             <CardHeader>
-              <CardTitle>Users</CardTitle>
-              <CardDescription>Total registered accounts</CardDescription>
+              <CardTitle>Blocks</CardTitle>
+              <CardDescription>Mapped block previews</CardDescription>
             </CardHeader>
-            <CardContent className="text-3xl font-semibold">{userCount}</CardContent>
+            <CardContent className="text-3xl font-semibold">{blockCount}</CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Admins</CardTitle>
-              <CardDescription>Accounts with admin access</CardDescription>
+              <CardTitle>Layouts</CardTitle>
+              <CardDescription>Page layout blueprints</CardDescription>
             </CardHeader>
-            <CardContent className="text-3xl font-semibold">{adminCount}</CardContent>
+            <CardContent className="text-3xl font-semibold">{layoutCount}</CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Messages</CardTitle>
-              <CardDescription>Contact form submissions</CardDescription>
+              <CardTitle>Navigation</CardTitle>
+              <CardDescription>Navigation style variants</CardDescription>
             </CardHeader>
-            <CardContent className="text-3xl font-semibold">
-              {messageCount}
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Products</CardTitle>
-              <CardDescription>Catalog items</CardDescription>
-            </CardHeader>
-            <CardContent className="text-3xl font-semibold">{productCount}</CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Orders</CardTitle>
-              <CardDescription>All orders</CardDescription>
-            </CardHeader>
-            <CardContent className="text-3xl font-semibold">{orderCount}</CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Revenue</CardTitle>
-              <CardDescription>Paid + fulfilled</CardDescription>
-            </CardHeader>
-            <CardContent className="text-3xl font-semibold">
-              ${(revenueCents / 100).toFixed(2)}
-            </CardContent>
+            <CardContent className="text-3xl font-semibold">{navCount}</CardContent>
           </Card>
         </div>
+
+        <CatalogManagement items={items} unmapped={unmapped} />
       </div>
     </div>
   );

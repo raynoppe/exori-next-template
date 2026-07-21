@@ -1,0 +1,1 @@
+This is for the app's actual end user, where they can log in, register, create, view their tickets, respond to tickets. Mark a tick as resolved.

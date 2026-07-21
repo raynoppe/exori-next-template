@@ -16,7 +16,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function RegisterForm() {
+export function RegisterForm({
+  loginHref = "/login",
+  successRedirect = "/login?registered=1",
+}: {
+  loginHref?: string;
+  successRedirect?: string;
+} = {}) {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,7 +49,7 @@ export function RegisterForm() {
       return;
     }
 
-    router.push("/login?registered=1");
+    router.push(successRedirect);
   }
 
   return (
@@ -100,7 +106,7 @@ export function RegisterForm() {
         </form>
         <p className="text-center text-sm text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-foreground">
+          <Link href={loginHref} className="font-medium text-foreground">
             Log in
           </Link>
         </p>

@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 
 import { auth } from "@/auth";
 import { isAdmin } from "@/lib/auth";
-import { contactSchema } from "@/lib/validations";
 import { prisma } from "@/lib/prisma";
+import { verifyTurnstileToken } from "@/lib/turnstile";
+import { contactSchema } from "@/lib/validations";
 
 export async function POST(request: Request) {
   try {
@@ -17,8 +18,21 @@ export async function POST(request: Request) {
       );
     }
 
+    if (process.env.TURNSTILE_SECRET_KEY) {
+      const valid = await verifyTurnstileToken(parsed.data.turnstileToken);
+
+      if (!valid) {
+        return NextResponse.json(
+          { error: "Captcha verification failed" },
+          { status: 400 },
+        );
+      }
+    }
+
+    const { name, email, message } = parsed.data;
+
     await prisma.contactMessage.create({
-      data: parsed.data,
+      data: { name, email, message },
     });
 
     return NextResponse.json({ success: true }, { status: 201 });

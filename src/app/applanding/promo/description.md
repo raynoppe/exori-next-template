@@ -1,0 +1,1 @@
+In the promo folders where they can create landing pages for specific promotions and special offers that get used by adverts. So if they've done a specific advert, it lands on a specific ad landing page. We will need an example of a landing page. 

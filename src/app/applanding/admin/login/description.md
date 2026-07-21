@@ -1,0 +1,1 @@
+This login is purely for the app owner or a user he set up that's got admin rights to log in. 

@@ -5,7 +5,7 @@ import { useTransition } from "react";
 import {
   refundOrderAction,
   updateOrderStatusAction,
-} from "@/app/admin/commerce/actions";
+} from "@/app/shop/admin/commerce/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button, ButtonLink } from "@/components/ui/button";
 import {

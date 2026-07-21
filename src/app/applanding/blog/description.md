@@ -1,0 +1,2 @@
+blog posts will be saved physical pages with a reference, blurb, content text and preview image saved to the database. content text, is saved to the database of search, I don't want a dynamic blogging system that builds pages on the fly. 
+So the main page.tsx in this folder will be the listings page with search, pagination. 

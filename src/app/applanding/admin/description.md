@@ -1,0 +1,1 @@
+The admin is for the owner of the site. see folders for instructions.

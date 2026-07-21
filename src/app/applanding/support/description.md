@@ -1,0 +1,1 @@
+A support page that explains how they can get support and also explaining how they can register for the portal and create a ticket. 

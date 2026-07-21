@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 
-import { deleteProductAction } from "@/app/admin/commerce/actions";
+import { deleteProductAction } from "@/app/shop/admin/commerce/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button, ButtonLink } from "@/components/ui/button";
 import {

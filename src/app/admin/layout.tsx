@@ -1,6 +1,6 @@
 import { SiteHeader } from "@/components/layout/site-header";
 
-export default function AdminLayout({
+export default function CatalogAdminLayout({
   children,
 }: {
   children: React.ReactNode;

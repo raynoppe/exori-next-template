@@ -1,0 +1,1 @@
+A page that shows all the different pricing, so it'll have pricing cards for subscriptions and also maybe have a section in there for token costs. 

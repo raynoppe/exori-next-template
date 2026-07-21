@@ -17,10 +17,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function LoginForm() {
+export function LoginForm({
+  defaultCallbackUrl = "/dashboard",
+  registerHref = "/register",
+  title = "Log in",
+  description = "Access your account or the admin area if you are an administrator.",
+}: {
+  defaultCallbackUrl?: string;
+  registerHref?: string;
+  title?: string;
+  description?: string;
+} = {}) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard";
+  const callbackUrl = searchParams.get("callbackUrl") ?? defaultCallbackUrl;
   const registered = searchParams.get("registered") === "1";
 
   const [email, setEmail] = useState("");
@@ -53,10 +63,8 @@ export function LoginForm() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>Log in</CardTitle>
-        <CardDescription>
-          Access your account or the admin area if you are an administrator.
-        </CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {registered ? (
@@ -100,7 +108,7 @@ export function LoginForm() {
         </form>
         <p className="text-center text-sm text-muted-foreground">
           No account?{" "}
-          <Link href="/register" className="font-medium text-foreground">
+          <Link href={registerHref} className="font-medium text-foreground">
             Register
           </Link>
         </p>

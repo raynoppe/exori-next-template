@@ -1,0 +1,1 @@
+This page is aimed at about the app and why it's built and what inspired it. 

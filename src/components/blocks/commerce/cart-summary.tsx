@@ -6,7 +6,7 @@ import { useTransition } from "react";
 import {
   removeFromCartAction,
   updateCartQuantityAction,
-} from "@/app/(shop)/cart/actions";
+} from "@/app/shop/cart/actions";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ResolvedCartLine } from "@/lib/commerce/cart";

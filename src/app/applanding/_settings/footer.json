@@ -1,0 +1,39 @@
+{
+  "brandName": "Nimbus App",
+  "brandHref": "/applanding",
+  "phone": "+98 (7765) 3422",
+  "email": "chat@nimbus.app",
+  "showNewsletter": true,
+  "newsletterHeadline": "Ship updates straight to your inbox",
+  "newsletterSubhead": "Product news, launch tips, and mobile growth tactics — weekly.",
+  "copyright": "Nimbus App © 2026 — All Rights Reserved",
+  "columns": [
+    {
+      "title": "Product",
+      "links": [
+        { "href": "/applanding/features", "label": "Features" },
+        { "href": "/applanding/features/feature1", "label": "For teams" },
+        { "href": "/applanding/features/feature2", "label": "For creators" },
+        { "href": "/applanding/pricing", "label": "Pricing" }
+      ]
+    },
+    {
+      "title": "Resources",
+      "links": [
+        { "href": "/applanding/blog", "label": "Blog" },
+        { "href": "/applanding/faq", "label": "FAQ" },
+        { "href": "/applanding/support", "label": "Support" },
+        { "href": "/applanding/contact", "label": "Contact" }
+      ]
+    },
+    {
+      "title": "Account",
+      "links": [
+        { "href": "/applanding/portal/login", "label": "Portal sign in" },
+        { "href": "/applanding/portal/register", "label": "Create account" },
+        { "href": "/applanding/legal/privacy", "label": "Privacy policy" },
+        { "href": "/applanding/legal/terms", "label": "Terms of service" }
+      ]
+    }
+  ]
+}

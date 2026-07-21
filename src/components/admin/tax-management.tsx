@@ -5,7 +5,7 @@ import { useTransition } from "react";
 import {
   createTaxRateAction,
   deleteTaxRateAction,
-} from "@/app/admin/commerce/actions";
+} from "@/app/shop/admin/commerce/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

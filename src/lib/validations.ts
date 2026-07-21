@@ -21,6 +21,7 @@ export const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Enter a valid email"),
   message: z.string().min(10, "Message must be at least 10 characters"),
+  turnstileToken: z.string().optional(),
 });
 
 export const shippingAddressSchema = z.object({

@@ -2,30 +2,50 @@
 
 import { useState } from "react";
 
+import { TurnstileWidget } from "@/components/forms/turnstile-widget";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export function ContactForm() {
+type ContactFormProps = {
+  requireCaptcha?: boolean;
+};
+
+export function ContactForm({ requireCaptcha = false }: ContactFormProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const captchaRequired =
+    requireCaptcha && Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     setSuccess(false);
+
+    if (captchaRequired && !turnstileToken) {
+      setError("Please complete the captcha verification");
+      return;
+    }
+
     setLoading(true);
 
     const response = await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, message }),
+      body: JSON.stringify({
+        name,
+        email,
+        message,
+        ...(turnstileToken ? { turnstileToken } : {}),
+      }),
     });
 
     const data = await response.json();
@@ -40,6 +60,7 @@ export function ContactForm() {
     setName("");
     setEmail("");
     setMessage("");
+    setTurnstileToken(null);
   }
 
   return (
@@ -85,6 +106,9 @@ export function ContactForm() {
           onChange={(event) => setMessage(event.target.value)}
         />
       </div>
+      {requireCaptcha ? (
+        <TurnstileWidget onToken={setTurnstileToken} />
+      ) : null}
       <Button type="submit" disabled={loading}>
         {loading ? "Sending..." : "Send message"}
       </Button>

@@ -1,0 +1,1 @@
+A FAQ page listing for the template, 10 FAQs with a description that expands if an end user clicks on the faq item.

@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 
-import { deleteUser, updateUserRole } from "@/app/admin/users/actions";
+import { deleteUser, updateUserRole } from "@/app/shop/admin/users/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 
-import { addToCartAction } from "@/app/(shop)/cart/actions";
+import { addToCartAction } from "@/app/shop/cart/actions";
 import { Button } from "@/components/ui/button";
 import { formatCents } from "@/lib/commerce/stripe";
 import { cn } from "@/lib/utils";

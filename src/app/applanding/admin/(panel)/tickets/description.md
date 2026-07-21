@@ -1,0 +1,1 @@
+In this area, the app admin users can view new tickets in as well as respond to them, close a ticket, delete a ticket. 

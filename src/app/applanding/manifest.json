@@ -1,0 +1,326 @@
+{
+  "id": "applanding",
+  "label": "App Landing",
+  "version": "1.0.0",
+  "summary": "Full-stack SaaS app landing template: marketing pages, JSON-driven nav/footer, DB-backed blog, contact inbox, end-user support portal, and site-owner admin.",
+  "defaultTheme": "dark",
+  "instructions": {
+    "settings": "Edit `_settings/*.json` for nav and footer without touching React. Exori overwrites these files when clients edit site chrome in the app.",
+    "sections": "Each section folder may include `description.md` — the build spec for that route. Pages compose Nimbus blocks; extend static copy in `src/lib/content/applanding/`.",
+    "database": "Blog posts, support tickets, and contact messages are stored in Postgres. Run `prisma migrate deploy` and `npm run db:seed` for demo content."
+  },
+  "settings": [
+    {
+      "id": "navigation",
+      "path": "_settings/navigation.json",
+      "description": "Header navigation: variant, brand, links (with optional dropdown children), CTA, auth buttons, default theme."
+    },
+    {
+      "id": "footer",
+      "path": "_settings/footer.json",
+      "description": "Footer: brand, contact details, newsletter copy, link columns, copyright."
+    }
+  ],
+  "staticContent": {
+    "path": "src/lib/content/applanding/",
+    "files": ["faq.ts", "content.ts"],
+    "description": "Static marketing copy — FAQ items, feature page content, support steps, token costs."
+  },
+  "components": {
+    "layout": {
+      "navigation": "src/components/blocks/navigation/site-navigation.tsx",
+      "footer": "src/app/applanding/components/site-footer.tsx"
+    }
+  },
+  "sections": [
+    {
+      "id": "home",
+      "label": "Home",
+      "route": "/applanding",
+      "folder": "",
+      "type": "marketing",
+      "optional": false,
+      "dataSource": "static",
+      "description": "App-launch homepage: hero, logos, features preview, stats, pricing teaser, testimonials, FAQ snippet, CTA."
+    },
+    {
+      "id": "about",
+      "label": "About",
+      "route": "/applanding/about",
+      "folder": "about/",
+      "type": "marketing",
+      "optional": false,
+      "dataSource": "static",
+      "spec": "about/description.md",
+      "description": "About the app — why it was built and what inspired it."
+    },
+    {
+      "id": "about-team",
+      "label": "Team",
+      "route": "/applanding/about/team",
+      "folder": "about/team/",
+      "type": "marketing",
+      "optional": true,
+      "dataSource": "static",
+      "spec": "about/team/description.md",
+      "description": "Optional team page with member grid and short bios."
+    },
+    {
+      "id": "features",
+      "label": "Features",
+      "route": "/applanding/features",
+      "folder": "features/",
+      "type": "marketing",
+      "optional": false,
+      "dataSource": "static",
+      "spec": "features/description.md",
+      "description": "Features hub — cards linking to individual feature detail pages."
+    },
+    {
+      "id": "features-feature1",
+      "label": "Feature 1",
+      "route": "/applanding/features/feature1",
+      "folder": "features/feature1/",
+      "type": "marketing",
+      "optional": false,
+      "parent": "features",
+      "dataSource": "static",
+      "description": "In-depth feature detail page (demo: For teams)."
+    },
+    {
+      "id": "features-feature2",
+      "label": "Feature 2",
+      "route": "/applanding/features/feature2",
+      "folder": "features/feature2/",
+      "type": "marketing",
+      "optional": false,
+      "parent": "features",
+      "dataSource": "static",
+      "description": "In-depth feature detail page (demo: For creators)."
+    },
+    {
+      "id": "pricing",
+      "label": "Pricing",
+      "route": "/applanding/pricing",
+      "folder": "pricing/",
+      "type": "marketing",
+      "optional": false,
+      "dataSource": "static",
+      "spec": "pricing/description.md",
+      "description": "Subscription pricing tiers plus token/usage cost table."
+    },
+    {
+      "id": "faq",
+      "label": "FAQ",
+      "route": "/applanding/faq",
+      "folder": "faq/",
+      "type": "marketing",
+      "optional": false,
+      "dataSource": "static",
+      "spec": "faq/description.md",
+      "description": "Accordion FAQ — 10 items from static content config."
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "route": "/applanding/contact",
+      "folder": "contact/",
+      "type": "marketing",
+      "optional": false,
+      "dataSource": "database",
+      "models": ["ContactMessage"],
+      "spec": "contact/description.md",
+      "description": "Contact form with Cloudflare Turnstile captcha. Submissions saved to ContactMessage."
+    },
+    {
+      "id": "blog",
+      "label": "Blog",
+      "route": "/applanding/blog",
+      "folder": "blog/",
+      "type": "marketing",
+      "optional": false,
+      "dataSource": "database",
+      "models": ["BlogPost"],
+      "spec": "blog/description.md",
+      "description": "Blog listing with search and pagination. Posts are DB-backed physical routes, not MDX-on-the-fly."
+    },
+    {
+      "id": "blog-post",
+      "label": "Blog post",
+      "route": "/applanding/blog/[slug]",
+      "folder": "blog/[slug]/",
+      "type": "marketing",
+      "optional": false,
+      "parent": "blog",
+      "dataSource": "database",
+      "models": ["BlogPost"],
+      "description": "Individual blog article rendered from BlogPost by slug."
+    },
+    {
+      "id": "support",
+      "label": "Support",
+      "route": "/applanding/support",
+      "folder": "support/",
+      "type": "marketing",
+      "optional": false,
+      "dataSource": "static",
+      "spec": "support/description.md",
+      "description": "How to get help — explains portal signup and ticket creation."
+    },
+    {
+      "id": "promo",
+      "label": "Promo pages",
+      "route": "/applanding/promo",
+      "folder": "promo/",
+      "type": "marketing",
+      "optional": true,
+      "dataSource": "static",
+      "spec": "promo/description.md",
+      "description": "Index for ad/promotion landing pages used by campaigns."
+    },
+    {
+      "id": "promo-launch-offer",
+      "label": "Launch offer",
+      "route": "/applanding/promo/launch-offer",
+      "folder": "promo/launch-offer/",
+      "type": "marketing",
+      "optional": true,
+      "parent": "promo",
+      "dataSource": "static",
+      "description": "Example minimal ad landing page — hero, single offer, CTA."
+    },
+    {
+      "id": "legal-privacy",
+      "label": "Privacy policy",
+      "route": "/applanding/legal/privacy",
+      "folder": "legal/privacy/",
+      "type": "legal",
+      "optional": false,
+      "dataSource": "static",
+      "description": "Privacy policy page."
+    },
+    {
+      "id": "legal-terms",
+      "label": "Terms of service",
+      "route": "/applanding/legal/terms",
+      "folder": "legal/terms/",
+      "type": "legal",
+      "optional": false,
+      "dataSource": "static",
+      "description": "Terms of service page."
+    },
+    {
+      "id": "portal",
+      "label": "Support portal",
+      "route": "/applanding/portal",
+      "folder": "portal/",
+      "type": "portal",
+      "optional": false,
+      "dataSource": "database",
+      "models": ["SupportTicket", "TicketMessage"],
+      "spec": "portal/description.md",
+      "auth": "required",
+      "description": "End-user area: register, log in, create/view/reply to support tickets, mark resolved."
+    },
+    {
+      "id": "portal-tickets",
+      "label": "My tickets",
+      "route": "/applanding/portal/tickets",
+      "folder": "portal/(protected)/tickets/",
+      "type": "portal",
+      "optional": false,
+      "parent": "portal",
+      "dataSource": "database",
+      "models": ["SupportTicket", "TicketMessage"],
+      "auth": "required",
+      "description": "Ticket list for the signed-in user."
+    },
+    {
+      "id": "portal-ticket-new",
+      "label": "New ticket",
+      "route": "/applanding/portal/tickets/new",
+      "folder": "portal/(protected)/tickets/new/",
+      "type": "portal",
+      "optional": false,
+      "parent": "portal",
+      "dataSource": "database",
+      "models": ["SupportTicket", "TicketMessage"],
+      "auth": "required",
+      "description": "Create a new support ticket."
+    },
+    {
+      "id": "portal-ticket-detail",
+      "label": "Ticket thread",
+      "route": "/applanding/portal/tickets/[id]",
+      "folder": "portal/(protected)/tickets/[id]/",
+      "type": "portal",
+      "optional": false,
+      "parent": "portal",
+      "dataSource": "database",
+      "models": ["SupportTicket", "TicketMessage"],
+      "auth": "required",
+      "description": "Ticket conversation view with reply and resolve actions."
+    },
+    {
+      "id": "admin",
+      "label": "Site admin",
+      "route": "/applanding/admin",
+      "folder": "admin/",
+      "type": "admin",
+      "optional": false,
+      "dataSource": "database",
+      "models": ["User", "ContactMessage", "SupportTicket", "TicketMessage"],
+      "spec": "admin/description.md",
+      "auth": "admin",
+      "description": "Site owner control panel — overview counts for users, messages, and tickets."
+    },
+    {
+      "id": "admin-messages",
+      "label": "Messages inbox",
+      "route": "/applanding/admin/messages",
+      "folder": "admin/(panel)/messages/",
+      "type": "admin",
+      "optional": false,
+      "parent": "admin",
+      "dataSource": "database",
+      "models": ["ContactMessage"],
+      "spec": "admin/messages/description.md",
+      "auth": "admin",
+      "description": "Read contact form submissions from the website."
+    },
+    {
+      "id": "admin-tickets",
+      "label": "Ticket management",
+      "route": "/applanding/admin/tickets",
+      "folder": "admin/(panel)/tickets/",
+      "type": "admin",
+      "optional": false,
+      "parent": "admin",
+      "dataSource": "database",
+      "models": ["SupportTicket", "TicketMessage"],
+      "spec": "admin/tickets/description.md",
+      "auth": "admin",
+      "description": "View, respond to, close, and delete support tickets."
+    },
+    {
+      "id": "admin-users",
+      "label": "User management",
+      "route": "/applanding/admin/users",
+      "folder": "admin/(panel)/users/",
+      "type": "admin",
+      "optional": false,
+      "parent": "admin",
+      "dataSource": "database",
+      "models": ["User"],
+      "spec": "admin/users/description.md",
+      "auth": "admin",
+      "description": "Promote/demote admin role and manage user accounts."
+    }
+  ],
+  "sectionTypes": {
+    "marketing": "Public pages composed from Nimbus blocks.",
+    "legal": "Legal/policy pages.",
+    "portal": "Authenticated end-user support area.",
+    "admin": "Authenticated site-owner admin area (ADMIN role)."
+  }
+}
